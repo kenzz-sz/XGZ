@@ -201,9 +201,64 @@
 })();
 
     `},
-        { name: "🌈 Disco Mode", code: "setInterval(() => document.body.style.backgroundColor = '#'+Math.floor(Math.random()*16777215).toString(16), 200)" },
-        { name: "🌙 Dark Invert", code: "document.body.style.filter = 'invert(1) hue-rotate(180deg)'" },
-        { name: "🛡️ Remove Ads", code: "document.querySelectorAll('iframe, .ads, #ad').forEach(el => el.remove())" }
+        { name: "📲 run local file js", code: `
+        (function() {
+    // 1. Buat elemen input file secara dinamis
+    var inputFile = document.createElement('input');
+    inputFile.type = 'file';
+    inputFile.accept = '.js';
+    inputFile.style.display = 'none';
+
+    // 2. Tambahkan ke body sementara (beberapa browser mewajibkan ini)
+    document.body.appendChild(inputFile);
+
+    // 3. Atur logika saat file dipilih
+    inputFile.onchange = function(event) {
+        var file = event.target.files[0];
+        if (!file) {
+            console.log('Tidak ada file yang dipilih.');
+            return;
+        }
+
+        var reader = new FileReader();
+
+        reader.onload = function(e) {
+            var kontenScript = e.target.result;
+            console.log('--- Memulai Eksekusi: ' + file.name + ' ---');
+            
+            try {
+                // Menggunakan constructor Function untuk menjalankan kode
+                var eksekusi = new Function(kontenScript);
+                eksekusi();
+                
+                console.log('--- Eksekusi Selesai ---');
+            } catch (err) {
+                console.error('Terjadi error saat menjalankan file JS:');
+                console.error(err);
+            }
+
+            // Hapus elemen input setelah selesai
+            document.body.removeChild(inputFile);
+        };
+
+        reader.onerror = function() {
+            console.error('Gagal membaca file.');
+        };
+
+        reader.readAsText(file);
+    };
+
+    // 4. Klik otomatis untuk membuka jendela pilih file
+    inputFile.click();
+})();
+
+        ` },
+        {
+         name: "🌈 Disco Mode", code: "setInterval(() => document.body.style.backgroundColor = '#'+Math.floor(Math.random()*16777215).toString(16), 200)" },
+        {
+         name: "🌙 Dark Invert", code: "document.body.style.filter = 'invert(1) hue-rotate(180deg)'" },
+        {
+         name: "🛡️ Remove Ads", code: "document.querySelectorAll('iframe, .ads, #ad').forEach(el => el.remove())" }
     ];
 
     // 1. INJEKSI CSS ANIMASI & UI
