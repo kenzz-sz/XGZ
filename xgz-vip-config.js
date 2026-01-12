@@ -22,7 +22,7 @@
     ` 
 },
         {
-    name: "📠 Open Console Virtual",
+    name: "📠 Open Console",
     code: `
     (function() {
     // 1. CONTAINER UTAMA
@@ -54,7 +54,7 @@
     header.style.alignItems = 'center';
     header.style.borderBottom = '1px solid #333';
     header.style.userSelect = 'none';
-    header.innerHTML = '<span style="font-weight:bold; color:#eee; font-size:13px;">JS CONSOLE NO-BACKTICK</span>';
+    header.innerHTML = '<span style="font-weight:bold; color:#eee; font-size:13px;">console</span>';
     
     var controls = document.createElement('div');
     var clearBtn = document.createElement('button');
@@ -104,10 +104,10 @@
     textarea.style.height = '80px';
     textarea.style.padding = '8px';
     textarea.style.borderRadius = '6px';
-    textarea.placeholder = 'Tulis kode di sini...';
+    textarea.placeholder = '>';
     
     var runBtn = document.createElement('button');
-    runBtn.innerHTML = 'RUN ⚡';
+    runBtn.innerHTML = 'execute';
     runBtn.style.background = '#00ff00';
     runBtn.style.border = 'none';
     runBtn.style.padding = '10px';
@@ -152,7 +152,6 @@
     var runCode = function() {
         var code = textarea.value.trim();
         if (!code) return;
-        print('> Executing...', '#888');
         try {
             var result = window.eval(code);
             if (result !== undefined) print(result, '#00ffff');
@@ -197,7 +196,7 @@
     window.addEventListener('mouseup', stop);
     window.addEventListener('touchend', stop);
 
-    print('Console Ready! Tanpa backticks.');
+    print('Start up console sucsess');
 })();
 
     `},
