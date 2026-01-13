@@ -45,7 +45,7 @@
     Last update: ${dataxgzconfig.lastupdatedxgzconfig}
     `
   system("clear")
-  d(0, "mainmenu()")
+  d(500, "mainmenu()")
 }
   
 Promise.all([
