@@ -1,4 +1,11 @@
 (function() {
+  window.startup = function(){
+    bot(`
+    ${dataxgzconfig.namexgzconfig}
+    ${dataxgzconfig.lastupdatedxgzconfig}
+    `)
+  };
+  
   const dataxgzconfig = {
     "namexgzconfig": "",
     "lastupdatedxgzconfig": ""
@@ -8,12 +15,5 @@
   .then(text => (dataxgzconfig.lastupdatedxgzconfig) = (text));
   system("clear")
   d(1000, "startup()")
-  
-  function startup(){
-    bot(`
-    ${dataxgzconfig.namexgzconfig}
-    ${dataxgzconfig.lastupdatedxgzconfig}
-    `)
-  }
 })();
 
