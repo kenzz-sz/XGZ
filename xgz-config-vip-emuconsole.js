@@ -1,61 +1,68 @@
-(function() {
-  function main() {
-  const scenexgz = 0
-  window.mainmenu = function(){
-    bot(n)
-    bot(`
-    [ MAIN MENU ]
-    1. ⚡ Change let/var
-    `)
-    bot(`<input id="ch">`)
-    bot(`<button onclick="ok()",>`)
+(function () {
+
+  // DATABASE
+  const dataxgzconfig = {
+    namexgzconfig: "",
+    lastupdatedxgzconfig: ""
   };
-  window.ok = function(){
-    if(scenexgz == 0 && ch.value == "1"){
-      changeletvar()
-    }
-    else{
-      main()
-    }
+
+  let n = "";
+  let scenexgz = 0;
+
+  function main() {
+    console.clear();
+    mainmenu();
   }
+
+  window.mainmenu = function(){
+    bot(n);
+    bot(`
+[ MAIN MENU ]
+1. ⚡ Change let/var
+    `);
+    bot(`<input id="ch">`);
+    bot(`<button onclick="ok()">OK</button>`);
+  };
+
+  window.ok = function(){
+    if(scenexgz === 0 && window.ch?.value === "1"){
+      changeletvar();
+    } else {
+      mainmenu();
+    }
+  };
+
   window.changeletvar = function(){
     const namev = prompt("Nama variabel (let/var):");
-        const newValue = prompt("Nilai baru:");
-        try {
-            // Kita gunakan eval untuk melakukan assignment secara paksa
-            // Cek apakah nilai baru harus berupa string atau angka
-            let formattedValue = isNaN(newValue) ? "'" + newValue + "'" : newValue;
-            
-            eval(namev + " = " + formattedValue);
-            
-            alert("Berhasil mengubah " + namev);
-            if(typeof scanPage === 'function') scanPage();
-        } catch(e) {
-            alert("Gagal! Variabel mungkin tidak ada di scope ini atau const.\\nError: " + e);
-        }
-  }
+    const newValue = prompt("Nilai baru:");
 
-  
-  system("clear")
-  d(500, "mainmenu()")
-}
-  
-Promise.all([
-  const dataxgzconfig = {
-    "namexgzconfig": "",
-    "lastupdatedxgzconfig": ""
-  }
-  const n = `
-    ${dataxgzconfig.namexgzconfig}<br>
-    Last update: ${dataxgzconfig.lastupdatedxgzconfig}
-    `
-  fetch("https://raw.githubusercontent.com/kenzz-sz/XGZ/refs/heads/main/lastupdated.txt").then(r => r.text()),
-  fetch("https://raw.githubusercontent.com/kenzz-sz/XGZ/refs/heads/main/namexgz.txt").then(r => r.text())
-]).then(([last, name]) => {
-  dataxgzconfig.lastupdatedxgzconfig = last.trim();
-  dataxgzconfig.namexgzconfig = name.trim();
+    try {
+      let formattedValue = isNaN(newValue)
+        ? `'${newValue}'`
+        : newValue;
 
-  main(); // ← BARU JALANKAN GUI
-});
+      eval(namev + " = " + formattedValue);
+      alert("Berhasil mengubah " + namev);
+
+    } catch(e) {
+      alert("Gagal:\n" + e);
+    }
+  };
+
+  // LOAD DATABASE DULU
+  Promise.all([
+    fetch("https://raw.githubusercontent.com/kenzz-sz/XGZ/refs/heads/main/lastupdated.txt").then(r => r.text()),
+    fetch("https://raw.githubusercontent.com/kenzz-sz/XGZ/refs/heads/main/namexgz.txt").then(r => r.text())
+  ]).then(([last, name]) => {
+    dataxgzconfig.lastupdatedxgzconfig = last.trim();
+    dataxgzconfig.namexgzconfig = name.trim();
+
+    n = `
+${dataxgzconfig.namexgzconfig}
+Last update: ${dataxgzconfig.lastupdatedxgzconfig}
+    `;
+
+    main(); // ← BARU START
+  });
+
 })();
-
