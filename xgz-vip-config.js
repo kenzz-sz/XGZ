@@ -5,13 +5,7 @@
      "namexgzconfig": "",
      "lastupdatedxgzconfig": ""
    }
-  fetch("https://raw.githubusercontent.com/kenzz-sz/XGZ/refs/heads/main/lastupdated.txt")
-  .then(res => res.text())
-  .then(text => (dataxgzconfig.lastupdatedxgzconfig) = (text));
-  fetch("https://raw.githubusercontent.com/kenzz-sz/XGZ/refs/heads/main/namexgz.txt")
-  .then(res => res.text())
-  .then(text => (dataxgzconfig.namexgzconfig) = (text));
-  
+    function initGUI() {
     const customScripts = [
         { 
     name: "⚡ Change let/var", 
@@ -420,5 +414,15 @@
     // RENDER
     document.body.appendChild(gui);
     document.body.appendChild(unhide);
-    scanPage();
+    scanPage();}
+    
+Promise.all([
+  fetch("https://raw.githubusercontent.com/kenzz-sz/XGZ/refs/heads/main/lastupdated.txt").then(r => r.text()),
+  fetch("https://raw.githubusercontent.com/kenzz-sz/XGZ/refs/heads/main/namexgz.txt").then(r => r.text())
+]).then(([last, name]) => {
+  dataxgzconfig.lastupdatedxgzconfig = last.trim();
+  dataxgzconfig.namexgzconfig = name.trim();
+
+  initGUI(); // ← BARU JALANKAN GUI
+});
 })();
