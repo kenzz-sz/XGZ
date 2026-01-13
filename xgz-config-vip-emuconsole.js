@@ -12,7 +12,7 @@
   function startup(){
     bot(`
     ${dataxgzconfig.namexgzconfig}
-    ${dataxgzconfig.lastupdatedconfig}
+    ${dataxgzconfig.lastupdatedxgzconfig}
     `)
   }
 })();
