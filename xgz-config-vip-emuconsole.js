@@ -25,7 +25,7 @@
   };
 
   window.ok = function(){
-    if(scenexgz === 0 && window.ch?.value === "1"){
+    if(scenexgz === 0 && window.ch.value === "1"){
       changeletvar();
     } else {
       mainmenu();
