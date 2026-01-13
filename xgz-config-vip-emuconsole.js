@@ -1,8 +1,4 @@
 (function() {
-  const n = `
-    ${dataxgzconfig.namexgzconfig}<br>
-    Last update: ${dataxgzconfig.lastupdatedxgzconfig}
-    `
   function main() {
   const scenexgz = 0
   window.mainmenu = function(){
@@ -38,7 +34,12 @@
             alert("Gagal! Variabel mungkin tidak ada di scope ini atau const.\\nError: " + e);
         }
   }
-    
+
+  
+  const n = `
+    ${dataxgzconfig.namexgzconfig}<br>
+    Last update: ${dataxgzconfig.lastupdatedxgzconfig}
+    `
   system("clear")
   d(0, "mainmenu()")
 }
