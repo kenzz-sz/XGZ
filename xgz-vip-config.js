@@ -299,7 +299,7 @@
 
     const header = document.createElement('div');
     header.className = "n-header";
-    header.innerHTML = `<span>XGZ VIP v1 <br>Last update: 12/1/2026:18.52</span><span id="cls" style="cursor:pointer; color:red;">-</span>`;
+    header.innerHTML = `<span>${dataxgzconfig.namexgzconfig} <br>Last update: ${dataxgzconfig.lastupdatedxgzconfig}</span><span id="cls" style="cursor:pointer; color:red;">-</span>`;
     gui.appendChild(header);
     header.querySelector('#cls').onclick = () => { gui.style.display = "none"; unhide.style.display = "block"; };
 
