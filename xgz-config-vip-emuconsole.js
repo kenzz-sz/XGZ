@@ -1,5 +1,5 @@
 (function() {
-  const dataxgzconfig {
+  const dataxgzconfig = {
     "namexgzconfig": "",
     "lastupdatedxgzconfig": ""
   }
