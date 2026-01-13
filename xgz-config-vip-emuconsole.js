@@ -36,6 +36,10 @@
   }
 
   
+  const dataxgzconfig = {
+    "namexgzconfig": "",
+    "lastupdatedxgzconfig": ""
+  }
   const n = `
     ${dataxgzconfig.namexgzconfig}<br>
     Last update: ${dataxgzconfig.lastupdatedxgzconfig}
@@ -43,10 +47,6 @@
   system("clear")
   d(0, "mainmenu()")
 }
-  const dataxgzconfig = {
-    "namexgzconfig": "",
-    "lastupdatedxgzconfig": ""
-  }
   
 Promise.all([
   fetch("https://raw.githubusercontent.com/kenzz-sz/XGZ/refs/heads/main/lastupdated.txt").then(r => r.text()),
