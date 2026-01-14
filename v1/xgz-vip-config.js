@@ -577,8 +577,8 @@ document.querySelectorAll('[id]').forEach(el => {
     try {
         const versionxgz = "v1"
         const [lastRes, nameRes] = await Promise.all([
-            fetch(`https://raw.githubusercontent.com/kenzz-sz/XGZ/refs/heads/main/${versionxgz}/lastupdated.txt`),
-            fetch(`https://raw.githubusercontent.com/kenzz-sz/XGZ/refs/heads/main/${versionxgz}/namexgz.txt`)
+            fetch(`https://raw.githubusercontent.com/kenzz-sz/XGZ/refs/heads/main/v1/lastupdated.txt`),
+            fetch(`https://raw.githubusercontent.com/kenzz-sz/XGZ/refs/heads/main/v1/namexgz.txt`)
         ]);
 
         const last = await lastRes.text();
