@@ -575,7 +575,6 @@ document.querySelectorAll('[id]').forEach(el => {
     // Menggunakan async function agar bisa memakai await
 (async function() {
     try {
-        const versionxgz = "v1"
         const [lastRes, nameRes] = await Promise.all([
             fetch(`https://raw.githubusercontent.com/kenzz-sz/XGZ/refs/heads/main/v1/lastupdated.txt`),
             fetch(`https://raw.githubusercontent.com/kenzz-sz/XGZ/refs/heads/main/v1/namexgz.txt`)
