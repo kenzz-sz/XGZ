@@ -13,12 +13,8 @@
             classzc = prompt("select class")
             chstyle = prompt("change style...")
             instyle = prompt("contents")
-            try {
             document.querySelectorAll(classzc)
              .forEach(b => b.style.(chstyle) = (instyle));
-            } catch(e) {
-            alert(e)
-            }
             `
         },
         { 
