@@ -8,7 +8,7 @@
     function initGUI() {
     const customScripts = [
         {
-            name: "Change all selected to change style",
+            name: "💿 Modify Selected Element Styles",
             code: `
             classzc = prompt("select class")
             chstyle = prompt("change style...")
