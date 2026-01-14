@@ -14,7 +14,7 @@
             chstyle = prompt("change style...")
             instyle = prompt("contents")
             document.querySelectorAll(classzc)
-             .forEach(b => b.style.(chstyle) = (instyle));
+ .forEach(b => b.style[chstyle] = instyle);
             `
         },
         { 
