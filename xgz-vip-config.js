@@ -347,6 +347,116 @@
     const listVar = makeCategory("📦 WINDOW VARS", "Search Variables...");
     const listCust = makeCategory("🛠️ CUSTOM BUTTONS", "Search Buttons...");
     const listExec = makeCategory("💻 JS EXECUTOR", "Executor Mode");
+const listLocal = makeCategory(
+  "💾 LOCAL STORAGE",
+  "Search localStorage..."
+);
+
+function scanLocalStorage() {
+    listLocal.innerHTML = "";
+
+    if (localStorage.length === 0) {
+        listLocal.innerHTML =
+          `<div class="n-item"><span style="color:#888">[ localStorage kosong ]</span></div>`;
+        return;
+    }
+
+    Object.keys(localStorage).forEach(oldKey => {
+        const oldVal = localStorage.getItem(oldKey);
+
+        const item = document.createElement("div");
+        item.className = "n-item";
+        item.style.flexDirection = "column";
+        item.style.alignItems = "stretch";
+        item.style.gap = "6px";
+
+        // KEY
+        const keyLabel = document.createElement("div");
+        keyLabel.style.fontSize = "10px";
+        keyLabel.style.color = "#0cf";
+        keyLabel.textContent = "KEY";
+
+        const keyInput = document.createElement("input");
+        keyInput.value = oldKey;
+        keyInput.style.cssText = `
+            width:100%;
+            background:#000;
+            color:#0cf;
+            border:1px solid #333;
+            border-radius:4px;
+            font-size:10px;
+            padding:4px;
+        `;
+
+        // VALUE
+        const valLabel = document.createElement("div");
+        valLabel.style.fontSize = "10px";
+        valLabel.style.color = "#aaa";
+        valLabel.textContent = "VALUE";
+
+        const valInput = document.createElement("textarea");
+        valInput.value = oldVal;
+        valInput.style.cssText = `
+            width:100%;
+            height:90px;
+            resize:none;
+            background:#000;
+            color:#0f0;
+            border:1px solid #333;
+            border-radius:4px;
+            font-size:10px;
+            padding:4px;
+        `;
+
+        // BUTTONS
+        const btnWrap = document.createElement("div");
+        btnWrap.style.display = "flex";
+        btnWrap.style.gap = "6px";
+        btnWrap.style.justifyContent = "flex-end";
+
+        const btnSave = document.createElement("button");
+        btnSave.className = "n-btn-action";
+        btnSave.textContent = "SAVE";
+        btnSave.onclick = () => {
+            const newKey = keyInput.value.trim();
+            const newVal = valInput.value;
+
+            if (!newKey) return alert("Key tidak boleh kosong");
+
+            if (newKey !== oldKey) {
+                localStorage.removeItem(oldKey);
+            }
+
+            localStorage.setItem(newKey, newVal);
+            scanLocalStorage();
+        };
+
+        const btnDel = document.createElement("button");
+        btnDel.className = "n-btn-action";
+        btnDel.style.background = "#f33";
+        btnDel.style.color = "#fff";
+        btnDel.textContent = "DEL";
+        btnDel.onclick = () => {
+            if (confirm("Hapus key '" + oldKey + "' ?")) {
+                localStorage.removeItem(oldKey);
+                scanLocalStorage();
+            }
+        };
+
+        btnWrap.append(btnSave, btnDel);
+
+        item.append(
+            keyLabel,
+            keyInput,
+            valLabel,
+            valInput,
+            btnWrap
+        );
+
+        listLocal.appendChild(item);
+    });
+}
+scanLocalStorage();
 
     // 5. SCANNER LOGIC (ID & VARS)
     function scanPage() {
@@ -354,17 +464,54 @@
         listVar.innerHTML = "";
 
         // Scan IDs
-        document.querySelectorAll('[id]').forEach(el => {
-            const item = document.createElement('div');
-            item.className = "n-item";
-            item.innerHTML = `<span style="color:#0cf">${el.id}</span>`;
-            const btn = document.createElement('button');
-            btn.className = "n-btn-action";
-            btn.innerText = "EDIT";
-            btn.onclick = () => { let v = prompt("Ganti text ID: " + el.id); if(v) el.innerText = v; };
-            item.appendChild(btn);
-            listID.appendChild(item);
-        });
+document.querySelectorAll('[id]').forEach(el => {
+    if (!el) return; // ⬅️ ANTI NULL
+
+    let isi = "";
+
+    try {
+        if ("value" in el) isi = el.value;
+        else if (el.innerText) isi = el.innerText;
+        else if (el.textContent) isi = el.textContent;
+        else isi = el.innerHTML;
+    } catch {
+        isi = "";
+    }
+
+    isi = String(isi).trim();
+    if (!isi) isi = "[ KOSONG / NO CONTENT ]";
+
+    const item = document.createElement('div');
+    item.className = "n-item";
+    item.innerHTML = `
+        <div style="max-width:180px">
+            <div style="color:#0cf">#${el.id}</div>
+            <div style="font-size:10px;color:#aaa;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
+                ${isi}
+            </div>
+        </div>
+    `;
+
+    const btn = document.createElement('button');
+    btn.className = "n-btn-action";
+    btn.innerText = "EDIT";
+    btn.onclick = () => {
+    const target = document.getElementById(el.id);
+    if (!target) return alert("Element sudah tidak ada");
+
+    const nv = prompt("Edit isi #" + el.id);
+    if (nv === null) return;
+
+    if ("value" in target) target.value = nv;
+    else target.innerHTML = nv;
+
+    // 🔥 UPDATE PREVIEW LANGSUNG
+    item.querySelector('div div:last-child').textContent = nv || "[ KOSONG ]";
+};
+
+    item.appendChild(btn);
+    listID.appendChild(item);
+});
 
         // Scan Global Vars (Window)
         Object.keys(window).slice(0, 100).forEach(key => {
