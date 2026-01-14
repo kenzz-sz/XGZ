@@ -425,14 +425,27 @@
     document.body.appendChild(gui);
     document.body.appendChild(unhide);
     scanPage();}
-    
-Promise.all([
-  fetch("https://raw.githubusercontent.com/kenzz-sz/XGZ/refs/heads/main/lastupdated.txt").then(r => r.text()),
-  fetch("https://raw.githubusercontent.com/kenzz-sz/XGZ/refs/heads/main/namexgz.txt").then(r => r.text())
-]).then(([last, name]) => {
-  dataxgzconfig.lastupdatedxgzconfig = last.trim();
-  dataxgzconfig.namexgzconfig = name.trim();
+    // Menggunakan async function agar bisa memakai await
+(async function() {
+    try {
+        const [lastRes, nameRes] = await Promise.all([
+            fetch("https://raw.githubusercontent.com/kenzz-sz/XGZ/refs/heads/main/lastupdated.txt"),
+            fetch("https://raw.githubusercontent.com/kenzz-sz/XGZ/refs/heads/main/namexgz.txt")
+        ]);
 
-  initGUI(); // ← BARU JALANKAN GUI
+        const last = await lastRes.text();
+        const name = await nameRes.text();
+
+        dataxgzconfig.lastupdatedxgzconfig = last.trim();
+        dataxgzconfig.namexgzconfig = name.trim();
+
+        initGUI(); 
+    } catch (err) {
+        console.error("Gagal mengambil data config:", err);
+        // Tetap jalankan GUI meski fetch gagal
+        initGUI();
+    }
+})();
+
 });
 })();
