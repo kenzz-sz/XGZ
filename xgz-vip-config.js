@@ -7,6 +7,20 @@
    }
     function initGUI() {
     const customScripts = [
+        {
+            name: "Change all selected to change style",
+            code: `
+            classzc = prompt("select class")
+            chstyle = prompt("change style...")
+            instyle = prompt("contents")
+            try {
+            document.querySelectorAll(classzc)
+             .forEach(b => b.style.(chstyle) = (instyle));
+            } catch(e) {
+            alert(e)
+            }
+            `
+        },
         { 
     name: "⚡ Change let/var", 
     code: `
